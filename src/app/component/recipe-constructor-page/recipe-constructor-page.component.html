@@ -1,0 +1,79 @@
+<tui-island>
+  <form
+    class="b-form"
+    [formGroup]="recipeForm">
+    <div class="tui-form__row">
+      <tui-input-files
+        *ngIf="!this.recipeForm.controls.picture.value"
+        [formControl]="this.recipeForm.controls.picture"
+      >
+        <input
+          tuiInputFiles
+          accept="image/*"
+          [attr.capture]="'environment'"
+          [multiple]="false"
+        />
+        <ng-template let-dragged>
+          <div
+            *ngIf="dragged; else base"
+            class="content">
+            <tui-marker-icon
+              mode="link"
+              src="tuiIconDropletLarge"></tui-marker-icon>
+            <div>Отпусти меня</div>
+          </div>
+          <ng-template #base>
+            <div class="content">
+              <tui-marker-icon
+                mode="link"
+                src="tuiIconUploadCloudLarge"></tui-marker-icon>
+              <div>
+                <a tuiLink>Выберите изображение блюда</a>
+                или перетащите его сюда
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
+      </tui-input-files>
+      <img
+        *ngIf="this.recipeForm.controls.picture.value"
+        allow="picture-in-picture"
+        allowfullscreen
+        frameborder="0"
+        scrolling="no"
+        [src]="imagePath"
+        [title]="'Title'"
+        class="island-image"
+        style="border-radius: calc(5 * var(--tui-radius-l) / 3);"
+        draggable="false"
+      >
+    </div>
+    <h3 class="tui-form__header">Название блюда</h3>
+    <div class="tui-form__row">
+      <tui-input formControlName="name">
+        Введите название блюда
+        <input
+          tuiTextfield
+          type="email" />
+      </tui-input>
+    </div>
+    <h3 class="tui-form__header">Рецепт</h3>
+    <tui-editor
+      formControlName="text"
+      [tools]="tools">
+      Подробное описание шагов рецепта
+    </tui-editor>
+    <div class="tui-form__buttons tui-form__buttons_align_center">
+      <button
+        size="l"
+        tuiButton
+        appearance="secondary"
+        type="button"
+        class="tui-form__button"
+        (click)="createRecipe()"
+      >
+        Создать рецепт
+      </button>
+    </div>
+  </form>
+</tui-island>

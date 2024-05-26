@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@taiga-ui/core/styles/taiga-ui-theme.less';
+
+:root {
+  font-family: "Inter var", sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-variation-settings: normal;
+  --font-family: "Inter var", sans-serif;
+  --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  --text-color: #334155;
+  --text-color-secondary: #64748b;
+  --primary-color: #3B82F6;
+  --primary-color-text: #ffffff;
+  --surface-0: #ffffff;
+  --surface-50: #f8fafc;
+  --surface-100: #f1f5f9;
+  --surface-200: #e2e8f0;
+  --surface-300: #cbd5e1;
+  --surface-400: #94a3b8;
+  --surface-500: #64748b;
+  --surface-600: #475569;
+  --surface-700: #334155;
+  --surface-800: #1e293b;
+  --surface-900: #0f172a;
+  --surface-950: #020617;
+  --gray-0: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --gray-950: #020617;
+  --content-padding: 1.125rem;
+  --inline-spacing: 0.5rem;
+  --border-radius: 6px;
+  --surface-ground: #f8fafc;
+  --surface-section: #ffffff;
+  --surface-card: #ffffff;
+  --surface-overlay: #ffffff;
+  --surface-border: #e2e8f0;
+  --surface-hover: #f1f5f9;
+  --focus-ring: none;
+  --maskbg: rgba(0, 0, 0, 0.4);
+  --highlight-bg: #EFF6FF;
+  --highlight-text-color: #1D4ED8;
+  --p-anchor-gutter: 2px;
+  color-scheme: light;
+}
+
+.layout-light {
+  --primary-color-default: var(--primary-600);
+  --primary-color-inverse-default: var(--surface-0);
+  --topbar-sticky-bg: rgba(255,255,255,.7);
+  --card-border: 1px solid var(--surface-border);
+  --card-bg: var(--surface-card);
+  --glow-image: url(https://www.primefaces.org/cdn/primeng/images/layout/pattern.png);
+  --glow-blend: hard-light, multiply;
+  --topbar-border: rgba(0,0,0,.05);
+  --mobile-menu-bg: var(--surface-overlay);
+  --demo-code-bg: var(--surface-800);
+  --demo-code-button-color: var(--surface-300);
+  --demo-code-button-hover-bg: rgba(255,255,255,.1);
+  --demo-code-button-hover-color: var(--surface-100);
+  --doc-highlight-text-bg: var(--surface-200);
+  --doc-highlight-text-color: var(--surface-700);
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--surface-ground);
+  font-weight: 400;
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

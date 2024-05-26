@@ -1,0 +1,44 @@
+<tui-island
+  size="l"
+  class="island">
+  <header>
+    <img
+      *ngIf="this.currentRecipe"
+      allow="picture-in-picture"
+      allowfullscreen
+      frameborder="0"
+      scrolling="no"
+      [src]="this.currentRecipe.picture"
+      class="island-image"
+      style="border-top-left-radius: calc(5 * var(--tui-radius-l) / 3); border-top-right-radius: calc(5 * var(--tui-radius-l) / 3);">
+  </header>
+  <main class="island-layout">
+    <div class="tui-island__content">
+      <h1 class="tui-island__title">
+        {{ this.currentRecipe?.name ?? 'Title' }}
+      </h1>
+      <div>
+        <button
+          appearance="secondary"
+          size="s"
+          tuiButton
+          type="button"
+          class="tui-space_right-1"
+          (click)="editRecipe()">
+          Изменить
+        </button>
+        <button
+          appearance="secondary-destructive"
+          size="s"
+          tuiButton
+          type="button"
+          (click)="deleteRecipePrompt()">
+          Удалить
+        </button>
+      </div>
+    </div>
+    <div class="tui-island__paragraph">
+      {{ this.currentRecipe?.text }}
+    </div>
+  </main>
+</tui-island>
