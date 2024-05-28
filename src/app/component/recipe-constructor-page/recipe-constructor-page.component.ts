@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { defaultEditorTools, TuiEditorTool } from '@tinkoff/tui-editor';
 import { Subject } from 'rxjs';

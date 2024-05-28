@@ -5,6 +5,7 @@ import { UserInfo } from '../domain/user.info';
 import { Observable } from 'rxjs';
 import { SignUpRequest } from '../domain/sign-up.request';
 import { TuiAlertService } from '@taiga-ui/core';
+import { BaseResponse } from '../domain/base.response';
 
 @Injectable({
   providedIn: 'root',
@@ -19,32 +20,52 @@ export class UserService {
   ) {}
 
   public signIn(signInRequest: SignInRequest): UserInfo | null {
-    this.http.post<UserInfo>('localhost:8080/api/v1/login', signInRequest).subscribe({
-      next: (res) => { this.currentUserInfo = res; return res },
+    this.http.post<BaseResponse<UserInfo>>('/api/v1/login', signInRequest).subscribe({
+      next: (res) => {
+        this.currentUserInfo = res.data;
+        this.alerts.open(
+          `Авторизован под пользователем <b>${this.currentUserInfo.username}</b>`,
+          { label: 'Успех', status: 'success', autoClose: true }
+        ).subscribe();
+        return res;
+      },
       error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
     });
     return this.currentUserInfo;
   }
 
   public signUp(signUpRequest: SignUpRequest): UserInfo | null {
-    this.http.post<UserInfo>('localhost:8080/api/v1/register', signUpRequest).subscribe({
-      next: (res) => { this.currentUserInfo = res; return res },
+    this.http.post<BaseResponse<UserInfo>>('/api/v1/register', signUpRequest).subscribe({
+      next: (res) => {
+        this.currentUserInfo = res.data;
+        this.alerts.open(
+          `Пользователь <b>${this.currentUserInfo.username}</b> создан`,
+          { label: 'Успех', status: 'success', autoClose: true }
+        ).subscribe();
+        return res;
+      },
       error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
     });
     return this.currentUserInfo;
   }
 
   public me(): UserInfo | null {
-    this.http.get<UserInfo>('localhost:8080/api/v1/me').subscribe({
-      next: (res) => { this.currentUserInfo = res; return res },
+    this.http.get<BaseResponse<UserInfo>>('/api/v1/me').subscribe({
+      next: (res) => {
+        this.currentUserInfo = res.data;
+        return res;
+      },
       error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
     });
     return this.currentUserInfo;
   }
 
   public logout(): void {
-    this.http.get('localhost:8080/api/v1/logout').subscribe({
-      next: () => this.currentUserInfo = null,
+    this.http.get('/api/v1/logout').subscribe({
+      next: () => {
+        this.currentUserInfo = null,
+        this.alerts.open("Успешно деавторизован", { label: 'Успех', status: 'success' }).subscribe();
+      },
       error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
     });
   }

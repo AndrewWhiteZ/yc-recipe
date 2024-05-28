@@ -42,7 +42,7 @@ export class AppComponent {
   ) {}
 
   get currentUserInfo() {
-    return !this.userService.currentUserInfo;
+    return this.userService.currentUserInfo;
   }
 
   public openLoginForm(content: PolymorpheusContent<TuiDialogContext>) {
@@ -57,7 +57,7 @@ export class AppComponent {
 
   public signIn() {
     const signInRequest: SignInRequest = {
-      email: this.signInForm.controls['email'].value,
+      username: this.signInForm.controls['email'].value,
       password: this.signInForm.controls['password'].value,
     };
     this.userService.signIn(signInRequest);
@@ -65,9 +65,9 @@ export class AppComponent {
 
   public signUp() {
     const signUpRequest: SignUpRequest = {
-      username: this.signInForm.controls['username'].value,
-      email: this.signInForm.controls['email'].value,
-      password: this.signInForm.controls['password'].value,
+      username: this.signUpForm.controls['username'].value,
+      email: this.signUpForm.controls['email'].value,
+      password: this.signUpForm.controls['password'].value,
     };
     this.userService.signUp(signUpRequest);
   }
