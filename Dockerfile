@@ -7,7 +7,7 @@ RUN npm run build --prod
 
 # Stage 2: Serve the Angular app using NGINX
 FROM nginx:alpine
-COPY --from=build /app/dist/yc-recipe /usr/share/nginx/html
+COPY --from=build /app/dist/yc-recipe/browser /usr/share/nginx/html
 COPY nginx.conf /nginx.conf.template
 EXPOSE 80
 
