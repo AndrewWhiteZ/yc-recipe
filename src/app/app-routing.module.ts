@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', component: RecipeIndexPageComponent },
   { path: 'recipe', component: RecipeIndexPageComponent },
   { path: 'recipe/constructor', component: RecipeConstructorPageComponent },
+  { path: 'recipe/:id/edit', component: RecipeConstructorPageComponent },
   { path: 'recipe/:id', component: RecipePageComponent },
 ];
 

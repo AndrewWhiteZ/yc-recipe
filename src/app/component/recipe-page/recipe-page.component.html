@@ -13,9 +13,9 @@
       style="border-top-left-radius: calc(5 * var(--tui-radius-l) / 3); border-top-right-radius: calc(5 * var(--tui-radius-l) / 3);">
   </header>
   <main class="island-layout">
-    <div class="tui-island__content">
+    <div class="tui-island__content tui-space_bottom-3">
       <h1 class="tui-island__title">
-        {{ this.currentRecipe?.name ?? 'Title' }}
+        {{ this.currentRecipe?.name }}
       </h1>
       <div>
         <button
@@ -37,8 +37,10 @@
         </button>
       </div>
     </div>
-    <div class="tui-island__paragraph">
-      {{ this.currentRecipe?.text }}
-    </div>
+    <tui-editor
+      [formControl]="formControl"
+      [ngModel]="currentRecipe?.text"
+      [tools]="tools">
+    </tui-editor>
   </main>
 </tui-island>

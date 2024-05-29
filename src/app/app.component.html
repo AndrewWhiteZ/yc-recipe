@@ -40,6 +40,17 @@
           tuiButton
           type="button"
           appearance=""
+          [icon]="'tuiIconUserLarge'"
+          size="m"
+          shape="rounded"
+        >
+          <span style="font-family: cursive;">{{ this.currentUserInfo.username }}</span>
+        </button>
+        <button
+          *ngIf="this.currentUserInfo"
+          tuiButton
+          type="button"
+          appearance=""
           [icon]="'tuiIconLogOutLarge'"
           size="m"
           shape="rounded"
@@ -56,7 +67,6 @@
 </tui-root>
 
 <ng-template let-observer #loginFormTemplate>
-  <!-- <h3 сlass="tui-form__header tui-form__header_margin-top_none">Регистрация</h3> -->
   <tui-tabs [(activeItemIndex)]="tabIndex" class="tui-space_bottom-5">
     <button
       tuiTab

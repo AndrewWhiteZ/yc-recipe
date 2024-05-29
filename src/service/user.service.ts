@@ -19,55 +19,20 @@ export class UserService {
     private alerts: TuiAlertService,
   ) {}
 
-  public signIn(signInRequest: SignInRequest): UserInfo | null {
-    this.http.post<BaseResponse<UserInfo>>('/api/v1/login', signInRequest).subscribe({
-      next: (res) => {
-        this.currentUserInfo = res.data;
-        this.alerts.open(
-          `Авторизован под пользователем <b>${this.currentUserInfo.username}</b>`,
-          { label: 'Успех', status: 'success', autoClose: true }
-        ).subscribe();
-        return res;
-      },
-      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
-    });
-    return this.currentUserInfo;
+  public signIn(signInRequest: SignInRequest): Observable<BaseResponse<UserInfo>> {
+    return this.http.post<BaseResponse<UserInfo>>('/api/v1/login', signInRequest);
   }
 
-  public signUp(signUpRequest: SignUpRequest): UserInfo | null {
-    this.http.post<BaseResponse<UserInfo>>('/api/v1/register', signUpRequest).subscribe({
-      next: (res) => {
-        this.currentUserInfo = res.data;
-        this.alerts.open(
-          `Пользователь <b>${this.currentUserInfo.username}</b> создан`,
-          { label: 'Успех', status: 'success', autoClose: true }
-        ).subscribe();
-        return res;
-      },
-      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
-    });
-    return this.currentUserInfo;
+  public signUp(signUpRequest: SignUpRequest): Observable<BaseResponse<UserInfo>> {
+    return this.http.post<BaseResponse<UserInfo>>('/api/v1/register', signUpRequest);
   }
 
-  public me(): UserInfo | null {
-    this.http.get<BaseResponse<UserInfo>>('/api/v1/me').subscribe({
-      next: (res) => {
-        this.currentUserInfo = res.data;
-        return res;
-      },
-      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
-    });
-    return this.currentUserInfo;
+  public me(): Observable<BaseResponse<UserInfo>> {
+    return this.http.get<BaseResponse<UserInfo>>('/api/v1/me');
   }
 
-  public logout(): void {
-    this.http.get('/api/v1/logout').subscribe({
-      next: () => {
-        this.currentUserInfo = null,
-        this.alerts.open("Успешно деавторизован", { label: 'Успех', status: 'success' }).subscribe();
-      },
-      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
-    });
+  public logout(): Observable<BaseResponse<null>> {
+    return this.http.get<BaseResponse<null>>('/api/v1/logout');
   }
   
 }

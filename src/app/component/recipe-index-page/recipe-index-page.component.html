@@ -1,47 +1,49 @@
-<tui-tiles
-  class="tiles"
-  [debounce]="500"
-  [(order)]="order">
-  <tui-tile
-    *ngFor="let item of items; let index = index"
-    class="tile"
-    [height]="item.h"
-    [style.order]="order.get(index)"
-    [width]="item.w">
-    <div
-      class="content"
-      [class.media]="item.type === 'text' || item.type === 'video'"
-      [ngSwitch]="item.type">
-      <iframe
-        *ngSwitchCase="'video'"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        frameborder="0"
-        [src]="item.content"
-        [title]="item.title"
-        class="video"></iframe>
-      <a
-        *ngSwitchCase="'text'"
-        [href]="recipeUrl(item)">
-        <img
-          *ngSwitchCase="'text'"
-          allow="picture-in-picture"
+<div class="tui-container">
+  <tui-tiles
+    class="tiles tui-space_bottom-5"
+    [debounce]="500"
+    [(order)]="order">
+    <tui-tile
+      *ngFor="let item of items; let index = index"
+      class="tile"
+      [height]="item.h"
+      [style.order]="order.get(index)"
+      [width]="item.w">
+      <div
+        class="content"
+        [class.media]="item.type === 'text' || item.type === 'video'"
+        [ngSwitch]="item.type">
+        <iframe
+          *ngSwitchCase="'video'"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
           frameborder="0"
-          scrolling="no"
           [src]="item.content"
           [title]="item.title"
-          class="image"
-          (click)="openRecipe(item)">
-      </a>
-      <tui-svg
-        src="tuiIconDragLarge"
-        tuiTileHandle
-        class="handle"></tui-svg>
-      <ng-template *ngSwitchDefault>
-        <h2 class="title">{{ item.title }}</h2>
-        Order - {{ order.get(index) ?? index }}
-      </ng-template>
-    </div>
-  </tui-tile>
-</tui-tiles>
+          class="video"></iframe>
+        <a
+          *ngSwitchCase="'text'"
+          [href]="recipeUrl(item)">
+          <img
+            *ngSwitchCase="'text'"
+            allow="picture-in-picture"
+            allowfullscreen
+            frameborder="0"
+            scrolling="no"
+            [src]="item.content"
+            [title]="item.title"
+            class="image"
+            (click)="openRecipe(item)">
+        </a>
+        <tui-svg
+          src="tuiIconDragLarge"
+          tuiTileHandle
+          class="handle"></tui-svg>
+        <ng-template *ngSwitchDefault>
+          <h2 class="title">{{ item.title }}</h2>
+          Order - {{ order.get(index) ?? index }}
+        </ng-template>
+      </div>
+    </tui-tile>
+  </tui-tiles>
+</div>

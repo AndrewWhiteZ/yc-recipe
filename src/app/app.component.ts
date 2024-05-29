@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
+import { TuiDialogService, TuiDialogContext, TuiAlertService } from '@taiga-ui/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
@@ -14,7 +14,7 @@ import { SignUpRequest } from '../domain/sign-up.request';
   styleUrl: './app.component.less',
   providers: [ TuiDialogFormService ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public stickyHeader: boolean = false;
   readonly title = 'Рецепты.ру';
 
@@ -39,7 +39,12 @@ export class AppComponent {
   constructor(
     @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
     private readonly userService: UserService,
+    private alerts: TuiAlertService,
   ) {}
+
+  ngOnInit(): void {
+    this.me();
+  }
 
   get currentUserInfo() {
     return this.userService.currentUserInfo;
@@ -60,7 +65,18 @@ export class AppComponent {
       username: this.signInForm.controls['email'].value,
       password: this.signInForm.controls['password'].value,
     };
-    this.userService.signIn(signInRequest);
+    this.userService.signIn(signInRequest).subscribe({
+      next: (res) => {
+        this.userService.currentUserInfo = res.data;
+        this.subscription.unsubscribe();
+        this.signInForm.reset();
+        this.alerts.open(
+          `Авторизован под пользователем <b>${this.userService.currentUserInfo.username}</b>`,
+          { label: 'Успех', status: 'success', autoClose: true }
+        ).subscribe();
+      },
+      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
+    });
   }
 
   public signUp() {
@@ -69,10 +85,35 @@ export class AppComponent {
       email: this.signUpForm.controls['email'].value,
       password: this.signUpForm.controls['password'].value,
     };
-    this.userService.signUp(signUpRequest);
+    this.userService.signUp(signUpRequest).subscribe({
+      next: (res) => {
+        this.userService.currentUserInfo = res.data;
+        this.subscription.unsubscribe();
+        this.signUpForm.reset();
+        this.alerts.open(
+          `Пользователь <b>${this.userService.currentUserInfo.username}</b> создан`,
+          { label: 'Успех', status: 'success', autoClose: true }
+        ).subscribe();
+      },
+      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
+    });
+  }
+
+  public me() {
+    this.userService.me().subscribe({
+      next: (res) => {
+        this.userService.currentUserInfo = res.data;
+      }
+    });
   }
 
   public logout() {
-    this.userService.logout();
+    this.userService.logout().subscribe({
+      next: () => {
+        this.userService.currentUserInfo = null,
+        this.alerts.open("Успешно деавторизован", { label: 'Успех', status: 'success' }).subscribe();
+      },
+      error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
+    });
   }
 }

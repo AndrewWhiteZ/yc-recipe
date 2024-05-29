@@ -70,9 +70,9 @@
         appearance="secondary"
         type="button"
         class="tui-form__button"
-        (click)="createRecipe()"
+        (click)="currentRecipe === null ? createRecipe() : editRecipe()"
       >
-        Создать рецепт
+        {{ currentRecipe === null ? 'Создать рецепт' : 'Изменить рецепт' }}
       </button>
     </div>
   </form>
