@@ -47,29 +47,7 @@ export class RecipeIndexPageComponent implements OnInit {
   getRecipes() {
     this.recipeService.getRecipeList().subscribe({
       next: (res) => {
-        this.items.push(
-          {
-            id: '_0',
-            w: 2,
-            h: 3,
-            type: RecipeCardType.VIDEO,
-            content: this.sanitizer.bypassSecurityTrustResourceUrl(
-              'https://www.youtube.com/embed/dQw4w9WgXcQ?modestbranding=1&autohide=1&showinfo=0&controls=0'
-            )
-          }
-        );
         this.items.push(...this.mapToRecipe(res.data));
-        this.items.push(
-          {
-            id: '_1',
-            w: 3,
-            h: 3,
-            type: RecipeCardType.VIDEO,
-            content: this.sanitizer.bypassSecurityTrustResourceUrl(
-              'https://www.youtube.com/embed/RMCO20yQPLU?modestbranding=1&autohide=1&showinfo=0&controls=0'
-            )
-          }
-        )
       },
       error: (err) => this.alerts.open(err.statusText, { label: 'Ошибка', status: 'error' }).subscribe()
     });
